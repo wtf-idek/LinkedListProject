@@ -61,7 +61,7 @@ int main() {
 	//I think the problem is actually in the remove function of DbleLinkedList.cpp
 		while (modList1.hasMore()) {
 		for (int i = 0; i <= list2.getCount(); ++i) {
-			if (check1 == check2) {
+			if (check1 == check2) { //it removes the first matching string but throws an error when it encounters the second
 				modList1.remove(check2);
 			}
 			check2 = list2.next();
