@@ -28,6 +28,8 @@ DblLinkedList::DblLinkedList(const DblLinkedList& dll) {
 	cout << "using copy constructor" << endl;
 }
 
+//this is commented out because it throws an error and as far as I can tell it shouldn't
+//I've been ignoring this problem for now
 //DblLinkedList::~DblLinkedList(){ //destructor
 //	//Node* tempPtr = head;
 //	//head = head->next;
