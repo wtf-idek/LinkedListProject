@@ -279,28 +279,31 @@ bool JJString::operator==(const JJString& argStr) const {
 	JJString temp1 = str; //temp strings to compare
 	JJString temp2 = argStr.str;
 
-	if ((isupper(temp1.str[0])) && (temp1.str[0] != '\0')) { //checks if the first char in each array is upper and changes if needed
-		char tChar = tolower(temp1.str[0]);
-		temp1.str[0] = tChar;
-	}
-	if (isupper(temp2.str[0]) && (temp2.str[0] != '\0')) {
-		char tChar2 = tolower(temp2.str[0]);
-		temp2.str[0] = tChar2;
-	}
+	if ((temp1.str[0] != '\0') && (temp2.str[0] != '\0')) {
 
-
-	while ((temp1[i] == temp2[i]) && (temp1[i] != '\0') && (temp2[i] != '\0')) {
-
-		if ((isupper(temp1.str[i + 1])) && (temp1.str[i + 1] != '\0')) { //checks to see if the next char is upper
-			char c = tolower(temp1.str[i + 1]); //changes to lower for comparison
-			temp1.str[i + 1] = c;
+		if (isupper(temp1.str[0])) { //checks if the first char in each array is upper and changes if needed
+			char tChar = tolower(temp1.str[0]);
+			temp1.str[0] = tChar;
 		}
-		if ((isupper(temp2.str[i + 1])) && (temp2.str[i + 1] != '\0')) {
-			char s = tolower(temp2.str[i + 1]);
-			temp2.str[i + 1] = s;
+		if (isupper(temp2.str[0])) {
+			char tChar2 = tolower(temp2.str[0]);
+			temp2.str[0] = tChar2;
 		}
 
-		++i;
+
+		while ((temp1[i] == temp2[i]) && (temp1[i] != '\0') && (temp2[i] != '\0')) {
+
+			if ((isupper(temp1.str[i + 1])) && (temp1.str[i + 1] != '\0')) { //checks to see if the next char is upper
+				char c = tolower(temp1.str[i + 1]); //changes to lower for comparison
+				temp1.str[i + 1] = c;
+			}
+			if ((isupper(temp2.str[i + 1])) && (temp2.str[i + 1] != '\0')) {
+				char s = tolower(temp2.str[i + 1]);
+				temp2.str[i + 1] = s;
+			}
+
+			++i;
+		}
 	}
 
 	if (temp1[i] == temp2[i]) {
