@@ -92,7 +92,7 @@ JJString DblLinkedList::next() const {
 		it = it->next;
 	}
 	else {
-		it == tail;
+		it = tail;
 	}
 
 	return stub;
