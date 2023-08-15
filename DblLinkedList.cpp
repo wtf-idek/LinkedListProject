@@ -216,7 +216,7 @@ bool DblLinkedList::remove(const JJString& str) { //not working when removed fro
 
 		if (tempStr == str) { //if data is the string 
 			Node* temp = it;
-
+			//breaks after this
 			if (it == head) { //if begining of list
 				head = temp->next;
 				it = temp->next;
