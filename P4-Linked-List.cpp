@@ -1,4 +1,6 @@
 //main code for project and source for revealing all my problems
+//things like using namespace std are because that's what my teacher has us do
+//I see many comments about not liking this online but for school, I'm going to listen to the teacher
 
 //#include "pch.h"   // may need this	
 #include <iostream>
@@ -47,19 +49,17 @@ int main() {
 	modList1.resetIterator();
 	modList2.resetIterator();
 
-	JJString check1 = modList1.next();
-	JJString check2 = list2.next();
 
+	// Below here is where I start seeing problems. 
+	//I'm trying to check each word in one list against the other 
+	//and remove it from the mod list if it's there
+	
+	//JJString check1 = modList1.next();
+	//JJString check2 = list2.next();
 
-	//while (modList1.hasMore()) {
-	//	while (list2.hasMore()) {
-	//		modList1.remove(check2);
-	//		check2 = list2.next();
-	//	}
-	//	check1 = modList1.next();
-	//	list2.resetIterator();
-	//}
-
+	//this throws an error in my JJString.cpp at the == overload or the != for the isupper
+	//I think the problem is actually in the remove function of DbleLinkedList.cpp
+	//I am also aware that it doesn't go through and remove every isntance of the word, I'm working on that
 	//for (int i = 0; i <= list2.getCount(); ++i) {
 	//	for (int j = 0; j <= modList1.getCount(); ++j) {
 	//		if (check2 == check1) {
@@ -85,7 +85,8 @@ int main() {
 	//check1 = modList2.next();
 	//check2 = list1.next();
 
-
+	//I also tried this way. It actually seems to run but very slowly. I think there's a better way.
+	//it also doesn't go through eact item
 	//while (modList2.hasMore()) {
 	//	while (list1.hasMore()) {
 	//		modList2.remove(check2);
