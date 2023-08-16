@@ -56,11 +56,11 @@ int main() {
 	cout << "There are " << modList2.getCount() << " words on Modified List 1 after removing List 2 strings." << endl;
 
 	ofstream fout; 
-	fout.open("outfile1.txt"); //outputing modified list 1 into a file
+	fout.open("outfile1.txt"); //outputing modified list 1 into a file but I accidentally uploaded the wrong one to github
 	fout << modList1;
 	fout.close();
 
-	fout.open("outfile2.txt"); //ouputing modified list 2 into a file
+	fout.open("outfile2.txt"); //ouputing modified list 2 into a file but I totally missed this out file
 	fout << modList2;
 	fout.close();
 
