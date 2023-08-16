@@ -82,7 +82,7 @@ bool DblLinkedList::hasMore() const {
 		return true;
 	}
 }
-
+//THE REAL PROBLEM WAS HIDING HERE ALL ALONG
 JJString DblLinkedList::next() const {
 	//gets the string the it pointer is pointing to
 	//then moves the it pointer to next "node" (could be nullptr)
