@@ -26,29 +26,17 @@ class DblLinkedList {
   public:
 	DblLinkedList();
 	DblLinkedList(const DblLinkedList& dll); //copy constructor
-	//~DblLinkedList(); //destructor
-	bool push_back(const JJString& str);
-	void resetIterator() const ;
-	bool hasMore() const;
-	JJString next() const;
-	void testConnections();
-	bool operator=(const DblLinkedList& dll);//assignment operator
-	 
-	//output the data to the ostream (separate each string with a blank space)
-	friend ostream& operator<<(ostream& ostrm, DblLinkedList& dll);
-	 
-	//insert the string argument into the list in the proper 
-	//place (smallest to largest). Do not insert the string if 
-	//the DLL already has a string of that value. Return true 
-	//if the string was inserted, otherwise return false
-	bool insert(const JJString& str);
-	 
-	//if the string argument is found in the DLL remove it from the DLL object. Return true if a string was removed, otherwise return false.
-	bool remove(const JJString & str); 
-	
-	//returns the number of strings that are stored in the DLL.
-	int getCount();
-
+	~DblLinkedList(); //destructor
+	bool push_back(const JJString& str); //places new str at the end of the list
+	void resetIterator() const; //resets the itereator to the beginning
+	bool hasMore() const; //checks to see if there is more to the list
+	JJString next() const; // returns the current string and moves to the next 
+	void testConnections(); // tests connections
+	bool operator=(const DblLinkedList& dll); //assignment operator
+	friend ostream& operator<<(ostream& ostrm, DblLinkedList& dll); //output the data to the ostream (separate each string with a blank space)
+	bool insert(const JJString& str); //insert the string argument into the list in the proper place
+	bool remove(const JJString & str); //if the string argument is found in the DLL remove it from the DLL object
+	int getCount(); //returns the number of strings that are stored in the DLL.
 
   private:
 	Node *head, *tail;
