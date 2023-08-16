@@ -1,42 +1,34 @@
 //main code for project and source for revealing all my problems
-//things like using namespace std are because that's what my teacher has us do
-//I see many comments about not liking this online but for school, I'm going to listen to the teacher
 
-//#include "pch.h"   // may need this	
+	
 #include <iostream>
 #include "JJStringList.h"
 #include "DblLinkedList.h"
 #include <fstream>
+#include <cctype>
 
 using namespace std;
 
-void readFromFile(fstream& file, JJString& str, DblLinkedList& list);
-void changer(DblLinkedList list);
+void readFromFile(fstream& file, JJString& str, DblLinkedList& list); //reads from the file and puts into list
+void changer(DblLinkedList list); //changes list while testing copy constructor
+void stringRemover(DblLinkedList& editList, DblLinkedList compList); //removes like strings from lists
 
 int main() {
-	DblLinkedList list1;
+	DblLinkedList list1; //lists that will have the strings read into
 	DblLinkedList list2;
-	DblLinkedList modList1;
+	DblLinkedList modList1; //lists that will be edited
 	DblLinkedList modList2;
 
 	fstream fileIn;
 	JJString readFile;
 
-	fileIn.open("infile1.txt");
+	fileIn.open("infile1.txt"); //creating list 1
 	readFromFile(fileIn, readFile, list1);
 	fileIn.close();
 
-	fileIn.open("infile2.txt");
+	fileIn.open("infile2.txt"); //creating list 2
 	readFromFile(fileIn, readFile, list2);
 	fileIn.close();
-
-	cout << "There are " << list1.getCount() << " words on List 1." << endl;
-	cout << "There are " << list2.getCount() << " words on list 2." << endl;
-	cout << "There are " << modList1.getCount() << " words on Modified List 1." << endl;
-	cout << "There are " << modList2.getCount() << " words on Modified list 2." << endl;
-
-	modList1 = list1;
-	modList2 = list2;
 
 	cout << endl;
 	cout << "There are " << list1.getCount() << " words on List 1." << endl;
@@ -44,32 +36,35 @@ int main() {
 	cout << "There are " << modList1.getCount() << " words on Modified List 1." << endl;
 	cout << "There are " << modList2.getCount() << " words on Modified list 2." << endl;
 
-	list1.resetIterator();
-	list2.resetIterator();
-	modList1.resetIterator();
-	modList2.resetIterator();
+	modList1 = list1; //copying list one to be modified
+	modList2 = list2; //copying list two to be modified
 
+	cout << endl;
+	cout << "There are " << list1.getCount() << " words on List 1." << endl;
+	cout << "There are " << list2.getCount() << " words on list 2." << endl;
+	cout << "There are " << modList1.getCount() << " words on Modified List 1 after copying List 1." << endl;
+	cout << "There are " << modList2.getCount() << " words on Modified list 2 after copying List 2." << endl;
 
-	// Below here is where I start seeing problems. 
-	//I'm trying to check each word in one list against the other 
-	//and remove it from the mod list if it's there
-	
-	JJString check1 = modList1.next();
-	JJString check2 = list2.next();
+	/*stringRemover(modList1, list2); //breaks my code, gives a "throw_bad_alloc"
+	stringRemover(modList2, list1); //which I think means I have a memory leak that I can't find
+	                               //I'm pretty sure it's in the JJString class, the bane of my existence.*/
 
-	//this throws an error in my JJString.cpp at the == overload  for the isupper check for cstr
-	//I think the problem is actually in the remove function of DbleLinkedList.cpp
-		while (modList1.hasMore()) {
-		for (int i = 0; i <= list2.getCount(); ++i) {
-			if (check1 == check2) { //it removes the first matching string but throws an error when it encounters the second
-				modList1.remove(check2);
-			}
-			check2 = list2.next();
-		}
-		list2.resetIterator();
-		check1 = modList1.next();
-	}
+	cout << endl;
+	cout << "There are " << list1.getCount() << " words on List 1." << endl;
+	cout << "There are " << list2.getCount() << " words on list 2." << endl;
+	cout << "There are " << modList1.getCount() << " words on Modified List 1 after removing List 2 strings." << endl;
+	cout << "There are " << modList2.getCount() << " words on Modified List 1 after removing List 2 strings." << endl;
 
+	ofstream fout; 
+	fout.open("outfile1.txt"); //outputing modified list 1 into a file
+	fout << modList1;
+	fout.close();
+
+	fout.open("outfile2.txt"); //ouputing modified list 2 into a file
+	fout << modList2;
+	fout.close();
+
+	changer(modList1); //function to use copy constructor
 
 	system("pause");
 	return 0;
@@ -85,9 +80,34 @@ void readFromFile(fstream& file, JJString& str, DblLinkedList& list) {
 
 }
 
-void changer(DblLinkedList list) {
+void stringRemover(DblLinkedList& editList, DblLinkedList compList) {
+	editList.resetIterator();
+	compList.resetIterator();
+
+	JJString check1 = editList.next();
+	JJString check2 = compList.next();
+
+	while (editList.hasMore()) {
+
+		for (int i = 0; i < compList.getCount(); ++i) {
+			
+			editList.remove(check2); //removes string if it's on the list
+
+			check2 = compList.next(); //gets next string to check
+		}
+
+		compList.resetIterator(); //resets first string to start over again
+
+		check1 = editList.next();
+		check2 = compList.next();
+	}
+}
+
+void changer(DblLinkedList list) { 
 	JJString zap = "ZAP";
 	JJString zip = "ZIP";
 	list.insert(zip);
 	list.insert(zap);
+
+	cout << endl << "The list is now: " << list.getCount() << " words long in the changer function." << endl;
 }
