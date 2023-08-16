@@ -23,16 +23,16 @@ JJString::JJString(const char* cstr) {
 	end = 0;
 
 
-	while (cstr[end] != '\0') {
+	while (cstr[end] != '\0') { //finds the end
 		++end;
-		if (end % 20 == 0) {
+		if (end % 20 == 0) { //adjusts the size of the capacity as needed
 			cap += 20;
 		}
 	}
 
-	str = new char[cap];
+	str = new char[cap]; //creates a new array with the size of the adjusted capacity
 
-	for (int i = 0; i <= end; ++i) {
+	for (int i = 0; i <= end; ++i) { //copies over all the chars in the array including the '\0'
 		str[i] = cstr[i];
 	}
 
@@ -42,21 +42,16 @@ JJString::JJString(const char* cstr) {
 
 //copy constructor
 JJString::JJString(const JJString& cstr) {
-	end = 0;
-
-	for (int i = 0; cstr.str[i] != '\0'; ++i) {
-		end++;
-	}
-
-	cap = ((end + 20) / 20) * 20;
 	
-	str = new char[cap];
-
-	int i=0;
+	end = cstr.end;
+	cap = ((end + 20) / 20) * 20; //makes adjustment to the cap if needed
 	
-	if (end > 0 && i < cap) {
-		for (i = 0; i <= cstr.length(); ++i) {
-			str[i] = cstr.str[i]; //VS give me a warning for this so it's probably the cause of my problems
+	str = new char[cap]; //creates an array of cap size
+
+	int i = 0;
+	if (end > 0 && i < cap) { //if not an empty string
+		for (i = 0; i <= cstr.length(); ++i) { //copies over each item in string, including '\0'
+			str[i] = cstr.str[i]; 
 		}
 	}
 
@@ -102,16 +97,15 @@ char* JJString::c_str() const {
 //assignment operator function
 JJString& JJString::operator=(const JJString& cstr) {
 	
-	if (this != &cstr) {
-		delete[] str;
-		str = new char[cstr.cap];
+	if (this != &cstr) { //if not pointing at itself
+		delete[] str; //delete default
+		str = new char[cstr.cap]; //create a new array with the cap size of the previous
 		this->end = cstr.end;
 		this->cap = cstr.cap;
 
-		for (int i = 0; i <= this-> end; ++i) {
+		for (int i = 0; i <= cstr.length(); ++i) { //copies over string, including '\0'
 			str[i] = cstr.str[i];
 		}
-		
 	}
 	return *this;
 }
@@ -133,11 +127,12 @@ ostream& operator <<(ostream& ostrm, const JJString& cstr) {
 istream& operator>>(istream& istrm, JJString& jjs) { 
 	char inputWords[100];
 	int punct = 0;
-	if (istrm >> inputWords) { 
+
+	if (istrm >> inputWords) { //reads in words
 		jjs.end = 0; 
 		while (inputWords[jjs.end] != '\0' && jjs.end < 99) { 
 			jjs.end++;
-			if (jjs.end % 20 == 0) {
+			if (jjs.end % 20 == 0) { //ups the capacity as needed
 				jjs.cap += 20;
 			}
 
@@ -159,11 +154,11 @@ istream& operator>>(istream& istrm, JJString& jjs) {
 	}
 
 	delete[] jjs.str;
-	jjs.str = new char[tempCap];
+	jjs.str = new char[tempCap]; //creates a string array with adjusted capacity
 	jjs.cap = tempCap;
 	jjs.end = tempEnd;
 
-	for (int i = 0; i <= tempEnd; ++i) {
+	for (int i = 0; i <= tempEnd; ++i) { //copies everything over including '\0'
 		jjs.str[i] = inputWords[i];
 	}
 
@@ -173,23 +168,23 @@ istream& operator>>(istream& istrm, JJString& jjs) {
 //+ operator overload function
 JJString JJString::operator+(const JJString& rstr) {
 	
-	int newEnd = this->length() + rstr.length();
+	int newEnd = this->length() + rstr.length(); //new length of the two strings
 	int newCap;
 
-	newCap = ((newEnd+20)/ 20) * 20; 
+	newCap = ((newEnd+20)/ 20) * 20; //finds the right capacity
 
 	JJString newString;
-	delete[] newString.str;
+	delete[] newString.str; //deletes default
 
-	newString.str = new char[newCap];
+	newString.str = new char[newCap]; //creates a new array with adjusted cap size
 	newString.cap = newCap;
 	newString.end = newEnd;
 
-	for (int i = 0; i < this->end; ++i) {
+	for (int i = 0; i < this->end; ++i) { //copies first string
 		newString.str[i] = this->str[i];
 	}
 
-	for (int i = this->end; i <= newEnd; ++i) {
+	for (int i = this->end; i <= newEnd; ++i) { //copies second string
 		newString.str[i] = rstr.str[i- this->end];
 	}
 
@@ -212,7 +207,7 @@ bool JJString::operator<(const JJString& argStr) const  {
 	}
 
 
-	while ((temp1[i] == temp2[i]) && (temp1[i] != '\0') && (temp2[i] != '\0')) {
+	while ((temp1[i] == temp2[i]) && (temp1[i] != '\0') && (temp2[i] != '\0')) { //while matching and not at the end of either array
 
 		if ((isupper(temp1.str[i + 1])) && (temp1.str[i + 1] != '\0')) { //checks to see if the next char is upper
 			char c = tolower(temp1.str[i + 1]); //changes to lower for comparison
@@ -226,7 +221,7 @@ bool JJString::operator<(const JJString& argStr) const  {
 		++i;
 	}
 
-	if (temp2.str[i] < temp1.str[i]) {
+	if (temp2.str[i] < temp1.str[i]) { //if earlier in the alphabet
 		return true;
 	}
 	else {
@@ -265,7 +260,7 @@ bool JJString::operator>(const JJString& argStr) const {
 		++i;
 	}
 
-	if (temp2.str[i] > temp1.str[i]) {
+	if (temp2.str[i] > temp1.str[i]) { //if later in the alphabet
 		return true;
 	}
 	else {
@@ -285,6 +280,7 @@ bool JJString::operator==(const JJString& argStr) const {
 			char tChar = tolower(temp1.str[0]);
 			temp1.str[0] = tChar;
 		}
+		
 		if (isupper(temp2.str[0])) {
 			char tChar2 = tolower(temp2.str[0]);
 			temp2.str[0] = tChar2;
@@ -306,7 +302,7 @@ bool JJString::operator==(const JJString& argStr) const {
 		}
 	}
 
-	if (temp1[i] == temp2[i]) {
+	if (temp1[i] == temp2[i]) { //if the same letter
 		return true;
 	}
 	else {
@@ -344,7 +340,7 @@ bool JJString::operator!=(const JJString& argStr) const {
 		}
 	}
 
-	if (temp1[i] != temp2[i]) {
+	if (temp1[i] != temp2[i]) { //if not the same letter
 		return true;
 	}
 	else {
