@@ -13,19 +13,20 @@ DblLinkedList::DblLinkedList() {
 	count = 0;
 }
 
-DblLinkedList::DblLinkedList(const DblLinkedList& dll) {
+DblLinkedList::DblLinkedList(const DblLinkedList& dll) { //copy constructor
+	dll.resetIterator();
 	head = dll.head;
 	tail = dll.tail;
 	it = dll.head;
 	dll.it = dll.head;
-	for (int i = 0; i <= dll.count; ++i) {
+
+	for (int i = 0; i < dll.count; ++i) {
 		it = dll.it;
-		it->prev = dll.it->prev;
-		it->next = dll.it->next;
-		dll.it = dll.it->next;
+		if (dll.it != nullptr) {
+			dll.it = dll.it->next;
+		}
 	}
 	count = dll.count;
-	cout << "using copy constructor" << endl;
 }
 
 //this is commented out because it throws an error and as far as I can tell it shouldn't
