@@ -88,14 +88,17 @@ JJString DblLinkedList::next() const {
 	//then moves the it pointer to next "node" (could be nullptr)
 	JJString stub;
 	stub = it->data;
-	if (it != tail) {
+	if (it->next != nullptr) {
 		it = it->next;
+
+		return stub;
 	}
 	else {
-		it = tail;
-	}
+		it = tail->prev;
+		it->next = nullptr;
+		return "null";
 
-	return stub;
+	}
 }
 
 void DblLinkedList::testConnections() {	
